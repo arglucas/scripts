@@ -1,0 +1,1 @@
+aws ec2 describe-regions --profile $1 | jq -r '.Regions[].RegionName' | while read REGION; do echo -n "$REGION: "; aws --region $REGION --profile $1 ec2 describe-images --filters "Name=owner-id,Values=099720109477" "Name=name,Values=ubuntu/images/hvm-ssd/ubuntu-trusty-14.04-amd64-server-20150325" | jq -r '.Images[].ImageId'; done
